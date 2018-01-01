@@ -6,14 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://davisliu2015.github.io">
-  <title>Archives: 2018/1 | davisliu的博客</title>
+  <title>C++11并发编程 | davisliu的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="davisliu的博客">
-<meta property="og:url" content="http://davisliu2015.github.io/archives/2018/01/index.html">
+  <meta name="description" content="C++11相比之前的C++版本有了很大提升，提供了诸如lambda表达式，初始化列表（initializer lists）右值引用，自动类型推论（auto）等特性，C++11标准库现在提供了正则表达式，优化过的智能指针，以及多线程库。 但是现在的C++仍然受限于他所支持的平行异步的计算方式，特别是和C#语言相比较 异步的必要性但是为什么我们需要支持异步？计算机的架构正在朝着并行化，分布式的方向发展">
+<meta name="keywords" content="C++ aysnc">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C++11并发编程">
+<meta property="og:url" content="http://davisliu2015.github.io/2018/01/01/cpp_11_async/index.html">
 <meta property="og:site_name" content="davisliu的博客">
+<meta property="og:description" content="C++11相比之前的C++版本有了很大提升，提供了诸如lambda表达式，初始化列表（initializer lists）右值引用，自动类型推论（auto）等特性，C++11标准库现在提供了正则表达式，优化过的智能指针，以及多线程库。 但是现在的C++仍然受限于他所支持的平行异步的计算方式，特别是和C#语言相比较 异步的必要性但是为什么我们需要支持异步？计算机的架构正在朝着并行化，分布式的方向发展">
+<meta property="og:updated_time" content="2018-01-01T14:11:38.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="davisliu的博客">
+<meta name="twitter:title" content="C++11并发编程">
+<meta name="twitter:description" content="C++11相比之前的C++版本有了很大提升，提供了诸如lambda表达式，初始化列表（initializer lists）右值引用，自动类型推论（auto）等特性，C++11标准库现在提供了正则表达式，优化过的智能指针，以及多线程库。 但是现在的C++仍然受限于他所支持的平行异步的计算方式，特别是和C#语言相比较 异步的必要性但是为什么我们需要支持异步？计算机的架构正在朝着并行化，分布式的方向发展">
   
     <link rel="alternative" href="/atom.xml" title="davisliu的博客" type="application/atom+xml">
   
@@ -143,36 +148,101 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-cpp_11_async" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2018" class="archive-year">2018</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/01/01/cpp_11_async/" class="archive-article-date">
-  	<time datetime="2018-01-01T13:23:16.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-01</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/01/01/cpp_11_async/">C++11并发编程</a>
+    <h1 class="article-title" itemprop="name">
+      C++11并发编程
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/2018/01/01/cpp_11_async/" class="archive-article-date">
+  	<time datetime="2018-01-01T13:23:16.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-01</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>C++11相比之前的C++版本有了很大提升，提供了诸如lambda表达式，初始化列表（initializer lists）右值引用，自动类型推论（auto）等特性，C++11标准库现在提供了正则表达式，优化过的智能指针，以及多线程库。</p>
+<p>但是现在的C++仍然受限于他所支持的平行异步的计算方式，特别是和C#语言相比较</p>
+<h3 id="异步的必要性"><a href="#异步的必要性" class="headerlink" title="异步的必要性"></a>异步的必要性</h3><p>但是为什么我们需要支持异步？计算机的架构正在朝着并行化，分布式的方向发展，随着多核处理器的普遍化，以及云的多核分布，软件应用会越来越经常处理多个组件他们交叉分布在一台机器上的各个核心上以及网络，现代编程语言需要支持并管理这种并行化</p>
+<p>在此同时，反应式变成在软件开发上边的越来越不可或缺，（不知道说什么）</p>
+<p>反应式是指我们不想代阻塞等待IO操作的计算，在服务端，我们不想阻塞一个工作线程，让他可以做一些其他工作，并且在工作完成的时候给出提示，在客户端，我们不想阻塞我们的界面主线程，这样会造成应用看起来很慢，无响应。能够写一部代码变得越来越重要。可以管理等待的IO操作，而不用阻塞，举个例子：作为规则 在winRT中，所有的I/O-bound APIS超过50ms的都需要提供异步接口，甚至不能被一个传统的阻塞调用唤起。</p>
+<p>在这里，我们看到C++提供了对并发的支持，并且他的新特性也都按照并发的思路发展（？？）在标准之外，我们也看到微软提供的PPL框架也在朝这个方向努力</p>
+<p>###一个简单的例子</p>
+<p>要理解如何写出异步的C++代码，我们给出一个简单的例子，想想一下我们要写一个函数，读一个文件，把他的内容拷贝到另外一个文件中，要做这件事我们可能会写如下的函数</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt; </span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt; </span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;fstream&gt; </span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt; </span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>; </span><br><span class="line"> </span><br><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">char</span>&gt; readFile(<span class="keyword">const</span> <span class="built_in">string</span>&amp; inPath) </span><br><span class="line">&#123; </span><br><span class="line">    <span class="function">ifstream <span class="title">file</span><span class="params">(inPath, ios::binary | ios::ate)</span></span>; </span><br><span class="line">    <span class="keyword">size_t</span> length = (<span class="keyword">size_t</span>)file.tellg(); </span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">char</span>&gt; buffer(length); </span><br><span class="line">    file.seekg(<span class="number">0</span>, <span class="built_in">std</span>::ios::beg); </span><br><span class="line">    file.read(&amp;buffer[<span class="number">0</span>], length); </span><br><span class="line">    <span class="keyword">return</span> buffer; </span><br><span class="line">&#125; </span><br><span class="line"> </span><br><span class="line"><span class="keyword">size_t</span> writeFile(<span class="keyword">const</span> <span class="built_in">vector</span>&lt;<span class="keyword">char</span>&gt;&amp; buffer, <span class="keyword">const</span> <span class="built_in">string</span>&amp; outPath) </span><br><span class="line">&#123; </span><br><span class="line">    <span class="function">ofstream <span class="title">file</span><span class="params">(outPath, ios::binary)</span></span>; </span><br><span class="line">    file.write(&amp;buffer[<span class="number">0</span>], buffer.size()); </span><br><span class="line">    <span class="keyword">return</span> (<span class="keyword">size_t</span>)file.tellp(); </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>通过上面的两个基础函数，我们可以很容易的写出一个函数，将文件拷贝并返回字符数量</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"> <span class="keyword">size_t</span> sync_copyFile(<span class="keyword">const</span> <span class="built_in">string</span>&amp; inFile, <span class="keyword">const</span> <span class="built_in">string</span>&amp; outFile) </span><br><span class="line">&#123; </span><br><span class="line">    <span class="keyword">return</span> writeFile(readFile(inFile), outFile); </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>显然，我们要先执行readFile，在执行writeFile，但是我们应该阻塞等待直到他们完成吗？当然，这显然是一个人为的例子，如果这个文件不是非常大，这根本不是问题，如果这个文件非常大，我们可以使用缓冲分块拷贝而不是通过一个大的vector返回所有的内容。但是，readFile 和 writeFile 是IO操作 他们代表了复杂IO操作的模型，在真实的应用中，经常会有从网络读取一些数据，将他们进行转换，返回响应，或者写入到一些地方</p>
+<p>所以我们说我们希望让这个拷贝操作异步执行，那么我们在标准C++钟如何管理他们？</p>
+<p>###基于任务的并发：futures 和 promises</p>
+<p>标准C++函数库提供了一些机制来支持并发。首先就是std::thread,和他一起使用的是一些同步对象(std::mutex, std::lock_guards, std::condition_variables and so on)最终提供了一种方便的方式来写传统的基于多线程的C++代码</p>
+<p>我们修改copyFIle函数让他在新县城执行拷贝，并且当线程完成使用condition_variable来做通知，但是工作在线程和锁的级别是非常困难的。现代的框架（比如TPL .NET）通常提供更高级别的抽象。在这种基于任务的并发方式中，一个任务代表一个异步操作可以并发运行于其他操作。并且系统隐藏了并发实现的细节</p>
+<p>C++11库，提供了新的<future>头，同时提供了（有限的）基于任务的并发机制，他们是promises和futures。C++中类std::promise<t>，std::future<t> 对应 Java8 中的Task<t>, or of a Future<t> 他们成对工作，用来分离函数调用行为以及等待结果的行为</t></t></t></t></future></p>
+<p>在调用侧，当我们调用异步函数我们不会受到类型T的结果，而会返回一个std::future<t>,一个用来放结果的容器，他会在迟一些的时候交付。</t></p>
+<p>一旦我们获得future的结果，我们可以继续做其他工作，当然任务运行在不同的线程。</p>
+<p>std::promise<t>对象代表了调用测的异步调用结果，并且它是一个通道用来将调用结果异步的传递给调用者，当任务完成时，他把结果防盗一个promise对象通过调用 promise::set_value</t></p>
+<p>当调用者最终需要访问结果时，他会调用阻塞 future::get()来获取，如果任务已经完成，结果会马上出现，否则，调用线程会刮起知道结果出现为止。</p>
+<p>在我们的例子中，这是copyFile使用 futures以及promises的版本</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;future&gt; </span></span></span><br><span class="line"> </span><br><span class="line"><span class="keyword">size_t</span> future_copyFile(<span class="keyword">const</span> <span class="built_in">string</span>&amp; inFile, <span class="keyword">const</span> <span class="built_in">string</span>&amp; outFile) </span><br><span class="line">&#123; </span><br><span class="line">    <span class="built_in">std</span>::promise&lt;<span class="built_in">vector</span>&lt;<span class="keyword">char</span>&gt;&gt; prom1; </span><br><span class="line">    <span class="built_in">std</span>::future&lt;<span class="built_in">vector</span>&lt;<span class="keyword">char</span>&gt;&gt; fut1 = prom1.get_future(); </span><br><span class="line">    <span class="built_in">std</span>::<span class="function">thread <span class="title">th1</span><span class="params">([&amp;prom1, inFile]()</span></span>&#123; </span><br><span class="line">        prom1.set_value(readFile(inFile)); </span><br><span class="line">    &#125;); </span><br><span class="line"> </span><br><span class="line">    <span class="built_in">std</span>::promise&lt;<span class="keyword">int</span>&gt; prom2; </span><br><span class="line">    <span class="built_in">std</span>::future&lt;<span class="keyword">int</span>&gt; fut2 = prom2.get_future(); </span><br><span class="line">    <span class="built_in">std</span>::<span class="function">thread <span class="title">th2</span><span class="params">([&amp;fut1, &amp;prom2, outFile]()</span></span>&#123; </span><br><span class="line">        prom2.set_value(writeFile(fut1.get(), outFile)); </span><br><span class="line">    &#125;); </span><br><span class="line"> </span><br><span class="line">    <span class="keyword">size_t</span> result = fut2.get(); </span><br><span class="line">    th1.join(); </span><br><span class="line">    th2.join(); </span><br><span class="line">    <span class="keyword">return</span> result; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注意，我们把执行readFile和writeFile放在分开的任务中，但是我们仍然需要配置以及启动线程来运行他们，并且，我们捕捉promise以及future对象的引用去确保他们task函数可用 第一个线程实现读，并把它的结果防盗promise，当完成的时候，以一个大vector的方式，第二个线程等待（阻塞）在一个相应的future，当读完成，获取读的vector，并把它传递给写函数，最终，当完成写操作，字符数量会放到第二个future中。</p>
+<p>在主函数中，我们可以利用这个并发 在调用 future::get()之前做一些长时间的操作。但是当我们调用了get()，main线程会仍然阻塞，如果读和写任务没有完成的时候。</p>
+<p>###Packaged tasks</p>
+<p>我们可以用packaged_tasks稍微简化下之前的代码。类std::packaged_task<t> 是一个任务以及他的promise的容器，他的模板类型是task function（比如: vector<char>(const string&amp;)对应我们的读函数， 这是可调用的类型。。。。 ）</char></t></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">size_t</span> packagedtask_copyFile(<span class="keyword">const</span> <span class="built_in">string</span>&amp; inFile, <span class="keyword">const</span> <span class="built_in">string</span>&amp; outFile) </span><br><span class="line">&#123; </span><br><span class="line">    <span class="keyword">using</span> Task_Type_Read = <span class="built_in">vector</span>&lt;<span class="keyword">char</span>&gt;(<span class="keyword">const</span> <span class="built_in">string</span>&amp;); </span><br><span class="line">    packaged_task&lt;Task_Type_Read&gt; pt1(readFile); </span><br><span class="line">    future&lt;<span class="built_in">vector</span>&lt;<span class="keyword">char</span>&gt;&gt; fut1&#123; pt1.get_future() &#125;; </span><br><span class="line">    thread th1&#123; move(pt1), inFile &#125;; </span><br><span class="line"> </span><br><span class="line">    <span class="keyword">using</span> Task_Type_Write = <span class="keyword">size_t</span>(<span class="keyword">const</span> <span class="built_in">string</span>&amp;); </span><br><span class="line">    packaged_task&lt;Task_Type_Write&gt; pt2([&amp;fut1](<span class="keyword">const</span> <span class="built_in">string</span>&amp; path)&#123; </span><br><span class="line">        <span class="keyword">return</span> writeFile(fut1.get(), path); </span><br><span class="line">    &#125;); </span><br><span class="line">    future&lt;<span class="keyword">size_t</span>&gt; fut2&#123; pt2.get_future() &#125;; </span><br><span class="line">    thread th2&#123; move(pt2), outFile &#125;; </span><br><span class="line"> </span><br><span class="line">    <span class="keyword">size_t</span> result = fut2.get(); </span><br><span class="line">    th1.join(); </span><br><span class="line">    th2.join(); </span><br><span class="line">    <span class="keyword">return</span> result; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注意，我们使用move()来给线程传递packaged_task 因为一个packaged_task不能被拷贝</p>
+<p>###std::async</p>
+<p>使用packaged_tasks的函数逻辑并没有改变太多。代码变得更可读一点，但是我们仍然需要手动创建线程来运行task，并且决定在哪个线程上运行task</p>
+<p>当我们使用了std::async() 事情会变得更简单，他仍然由标准库提供，他的输入是lambda或者是函数指针？他的返回是一个future它用来保存返回值，下面是使用std::async()的拷贝版本</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">size_t</span> async_copyFile(<span class="keyword">const</span> <span class="built_in">string</span>&amp; inFile, <span class="keyword">const</span> <span class="built_in">string</span>&amp; outFile) </span><br><span class="line">&#123; </span><br><span class="line">    <span class="keyword">auto</span> fut1 = async(readFile, inFile); </span><br><span class="line">    <span class="keyword">auto</span> fut2 = async([&amp;fut1](<span class="keyword">const</span> <span class="built_in">string</span>&amp; path)&#123; </span><br><span class="line">        <span class="keyword">return</span> writeFile(fut1.get(), path); </span><br><span class="line">    &#125;, </span><br><span class="line">    outFile); </span><br><span class="line"> </span><br><span class="line">    <span class="keyword">return</span> fut2.get(); </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>In a way std::async() is the equivalent of TPL task schedulers. It decides where to run the task, if a new thread needs to be created or if an old (or even the current) thread can be reused.</p>
+<p>It is also possible to specify a launch policy, which can be either “async” (which requires to execute the task asynchronously, possibly in a different thread) or “deferred” (which asks to execute the task only at the moment when get() is called).</p>
+<p>The nice thing is that std::async hides all the implementation, platform specific details for us. Examining the <future> header file that comes with VS2013 we can see that the Windows implementation of std::async internally uses the Parallel Patterns Library (PPL), the native equivalent of .NET TPL. </future></p>
+<p>###Towards C++17</p>
+<p>Hopefully we could soon see some of the improvements introduced by PPL in the C++ standard. There is already a document (N3857) written by Niklas Gustaffson et al. that proposes a few changes to the library. In particular, the idea is to enable the composability of future with future::then, future::when_any and future::when_all, with the same semantic seen in the PPL. The previous example, with the new futures, would be rewritten in a portable-way like this:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">future&lt;<span class="keyword">size_t</span>&gt; future_then_copyFile(<span class="keyword">const</span> <span class="built_in">string</span>&amp; inFile, <span class="keyword">const</span> <span class="built_in">string</span>&amp; outFile)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span> async([inFile]() &#123;</span><br><span class="line">        <span class="keyword">return</span> readFile(inFile);</span><br><span class="line">    &#125;).then([outFile](<span class="keyword">const</span> <span class="built_in">vector</span>&lt;<span class="keyword">char</span>&gt;&amp; buffer) &#123;</span><br><span class="line">        <span class="keyword">return</span> writeFile(buffer, outFile);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>There would also be a method future::is_ready to test the future for completion before calling the blocking get(), and future::unwrap to manage nested futures (futures that returns future); of course all the details of this proposal can be found in the document above.</p>
+<p>Would this be the perfect solution? Not quite. Out experience with .NET teaches us that task-based asynchronous code is still hard to write, debug, and maintain. Sometimes very hard. This is the reason why new keywords were added to the C# language itself, in the version 5.0, to more easily manage asynchrony through the Async/Await pattern.<br>Is there anything similar brewing even for the unmanaged world of C++?</p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>送人玫瑰，手有余香<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/assets/img/weixin.jpg">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -184,7 +254,7 @@
 		</ul>
 	</div>
 
-          
+      
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
@@ -197,44 +267,53 @@
 	</div>
 
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/01/01/hello-world/" class="archive-article-date">
-  	<time datetime="2018-01-01T11:53:24.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-01</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2018/01/01/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Hello World</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
+        
+        
+    </div>
+</aside>
+
+
+
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/01/01/hello-world/">Hello World</a>
-    </h1>
+  
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
   
 
-    
+  
+
+  
 
 
           </div>
@@ -257,8 +336,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
