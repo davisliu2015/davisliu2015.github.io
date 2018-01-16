@@ -145,6 +145,82 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-TesseractIniOS" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/01/16/TesseractIniOS/">TesseractIniOS</a>
+    </h1>
+  
+
+        
+        <a href="/2018/01/16/TesseractIniOS/" class="archive-article-date">
+  	<time datetime="2018-01-16T08:55:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-16</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="在iOS中使用Tesseract"><a href="#在iOS中使用Tesseract" class="headerlink" title="在iOS中使用Tesseract"></a>在iOS中使用Tesseract</h1><h3 id="一、Tesseract介绍"><a href="#一、Tesseract介绍" class="headerlink" title="一、Tesseract介绍"></a>一、Tesseract介绍</h3><p>Tesseract：是一款被广泛使用的开源 OCR 工具。他已经有 30 年历史，开始它是惠普实验室于1985年开始研发的一款专利软件，到1995年一件成为OCR业界内最准确的识别引擎之一。然而，HP不久便决定放弃OCR业务，Tesseract从此尘封。数年之后，HP意识到与其将Tesseract束之高阁，还不如贡献给开源，让其重焕新生。在 2005 年，Tesseract由美国内华达州信息技术研究所获得，并求助于Google对Tesseract进行改进、消除Bug、优化工作，并开源，其后一直由 Google 赞助进行后续的开发和维护。因为其免费与较好的效果，许多的个人开发者以及一些较小的团队在使用着 Tesseract ，诸如验证码识别、车牌号识别等应用中，不难见到 Tesseract 的身影。</p>
+<h3 id="二、在Mac-OSX平台上体验Tesseract"><a href="#二、在Mac-OSX平台上体验Tesseract" class="headerlink" title="二、在Mac OSX平台上体验Tesseract"></a>二、在Mac OSX平台上体验Tesseract</h3><p>使用brew来进行安装，</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install tesseract</span><br></pre></td></tr></table></figure>
+<p>不过，如果你只是用上述命令来安装Tesseract的话，就会发现，只支持英文，因为它只默认安装了eng的语言包，你可以通过如下方式安装指定的语言</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">wget https://github.com/tesseract-ocr/tessdata/raw/master/chi_sim.traineddata</span><br><span class="line">brew install tesseract --all-languages</span><br></pre></td></tr></table></figure>
+<p>Tesseract识别图像的基本用法：<br>首先可以通过”–list-langs”来查看哪些可用的“语言”</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">tesseract --list-langs</span><br><span class="line">List of available languages (2):</span><br><span class="line">chi_sim</span><br><span class="line">eng</span><br></pre></td></tr></table></figure>
+<p>大家可以看到，我安装了2个语言包，eng和chi_sim是Tesseract提供的英文和简体中文的语言文件。<br>假设我们有一张名为 paper.png 的图片，则通过以下命令对图片进行识别，</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tesseract paper.png paper -l chi_sim</span><br></pre></td></tr></table></figure>
+<ol>
+<li>第一个参数是待识别的图像的文件名</li>
+<li>第二个参数用于指定输出，如果希望直接输出而不是保存到文件，那么就使用 stdout，否则这个参数将会作为保存结果的文件的前缀</li>
+<li>-l chi_sim 这个应该很好理解，就是用来指定使用哪个 “语言文件”，如果是使用 英文(eng) ，这个参数可以不加，因为默认就是使用英文的 “语言文件” 来进行识别<br>以上命令如不出错，结果将会保存到 paper.txt 这个文本文件中。</li>
+</ol>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/01/16/TesseractIniOS/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-cpp_11_async" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
