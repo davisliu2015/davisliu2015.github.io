@@ -6,14 +6,18 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://davisliu2015.github.io">
-  <title>Archives: 2018 | davisliu的博客</title>
+  <title>asyncURLpp | davisliu的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="davisliu的博客">
-<meta property="og:url" content="http://davisliu2015.github.io/archives/2018/index.html">
+  <meta name="description" content="asyncURLpp基于libcurl使用C++11封装的异步网络库在接口的封装上参考了：https://github.com/whoshuu/cpr源代码位置：https://github.com/davisliu2015/asyncURLpp 一、get1、头文件 1#include &quot;mcpw.h&quot; 1、基本用法 1234567891011121314151617auto request =">
+<meta property="og:type" content="article">
+<meta property="og:title" content="asyncURLpp">
+<meta property="og:url" content="http://davisliu2015.github.io/2018/02/15/asyncURLpp/index.html">
 <meta property="og:site_name" content="davisliu的博客">
+<meta property="og:description" content="asyncURLpp基于libcurl使用C++11封装的异步网络库在接口的封装上参考了：https://github.com/whoshuu/cpr源代码位置：https://github.com/davisliu2015/asyncURLpp 一、get1、头文件 1#include &quot;mcpw.h&quot; 1、基本用法 1234567891011121314151617auto request =">
+<meta property="og:updated_time" content="2018-02-15T08:26:10.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="davisliu的博客">
+<meta name="twitter:title" content="asyncURLpp">
+<meta name="twitter:description" content="asyncURLpp基于libcurl使用C++11封装的异步网络库在接口的封装上参考了：https://github.com/whoshuu/cpr源代码位置：https://github.com/davisliu2015/asyncURLpp 一、get1、头文件 1#include &quot;mcpw.h&quot; 1、基本用法 1234567891011121314151617auto request =">
   
     <link rel="alternative" href="/atom.xml" title="davisliu的博客" type="application/atom+xml">
   
@@ -143,87 +147,134 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
+            <article id="post-asyncURLpp" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
+    <h1 class="article-title" itemprop="name">
+      asyncURLpp
+    </h1>
   
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2018" class="archive-year">2018</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/02/15/asyncURLpp/" class="archive-article-date">
+
+        
+        <a href="/2018/02/15/asyncURLpp/" class="archive-article-date">
   	<time datetime="2018-02-15T08:20:09.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-02-15</time>
 </a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/02/15/asyncURLpp/">asyncURLpp</a>
-    </h1>
-  
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="asyncURLpp"><a href="#asyncURLpp" class="headerlink" title="asyncURLpp"></a>asyncURLpp</h1><h2 id="基于libcurl使用C-11封装的异步网络库"><a href="#基于libcurl使用C-11封装的异步网络库" class="headerlink" title="基于libcurl使用C++11封装的异步网络库"></a>基于libcurl使用C++11封装的异步网络库</h2><p>在接口的封装上参考了：<a href="https://github.com/whoshuu/cpr" target="_blank" rel="noopener">https://github.com/whoshuu/cpr</a><br>源代码位置：<a href="https://github.com/davisliu2015/asyncURLpp" target="_blank" rel="noopener">https://github.com/davisliu2015/asyncURLpp</a></p>
+<h3 id="一、get"><a href="#一、get" class="headerlink" title="一、get"></a>一、get</h3><p>1、头文件</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"mcpw.h"</span></span></span><br></pre></td></tr></table></figure>
+<p>1、基本用法</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">auto</span> request = <span class="built_in">std</span>::make_shared&lt;mcpw::Request&gt;(</span><br><span class="line">    mcpw::Url&#123;url&#125;,</span><br><span class="line">    mcpw::RspHeader&#123;</span><br><span class="line">        [](<span class="keyword">const</span> <span class="keyword">uint32_t</span> statusCode, <span class="keyword">const</span> mcpw::Header&amp; header)</span><br><span class="line">        &#123;</span><br><span class="line">        &#125;&#125;,</span><br><span class="line">    mcpw::DataStream&#123;</span><br><span class="line">        [](<span class="built_in">std</span>::<span class="built_in">string</span>&amp; data)</span><br><span class="line">        &#123;</span><br><span class="line">        &#125;&#125;,</span><br><span class="line">    mcpw::Result&#123;</span><br><span class="line">        [](<span class="keyword">int32_t</span> retCode)</span><br><span class="line">        &#123;</span><br><span class="line">        &#125;&#125;</span><br><span class="line">);</span><br><span class="line">    </span><br><span class="line">request-&gt;Get();</span><br></pre></td></tr></table></figure>
+<p>2、http header </p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">auto</span> request = <span class="built_in">std</span>::make_shared&lt;mcpw::Request&gt;(</span><br><span class="line">    mcpw::Url&#123;url&#125;,</span><br><span class="line">    mcpw::Header&#123;&#123;<span class="string">"Charset"</span>, <span class="string">"UTF-8"</span>&#125;,</span><br><span class="line">                 &#123;<span class="string">"Accept-Language"</span>, <span class="string">"zh-CN"</span>&#125;,</span><br><span class="line">                 &#123;<span class="string">"Proxy-Connection"</span>, <span class="string">"Keep-Alive"</span>&#125;&#125;,</span><br><span class="line">    mcpw::RspHeader&#123;</span><br><span class="line">        [](<span class="keyword">const</span> <span class="keyword">uint32_t</span> statusCode, <span class="keyword">const</span> mcpw::Header&amp; header)</span><br><span class="line">        &#123;</span><br><span class="line">        &#125;&#125;,</span><br><span class="line">    mcpw::DataStream&#123;</span><br><span class="line">        [](<span class="built_in">std</span>::<span class="built_in">string</span>&amp; data)</span><br><span class="line">        &#123;</span><br><span class="line">        &#125;&#125;,</span><br><span class="line">    mcpw::Result&#123;</span><br><span class="line">        [](<span class="keyword">int32_t</span> retCode)</span><br><span class="line">        &#123;</span><br><span class="line">        &#125;&#125;</span><br><span class="line">);</span><br><span class="line">    </span><br><span class="line">request-&gt;Get();</span><br></pre></td></tr></table></figure>
+<p>3、设置超时（秒）</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">auto</span> request = <span class="built_in">std</span>::make_shared&lt;mcpw::Request&gt;(</span><br><span class="line">    mcpw::Url&#123;url&#125;,</span><br><span class="line">    mcpw::Timeout&#123;<span class="number">10</span>&#125;,</span><br><span class="line">    mcpw::RspHeader&#123;</span><br><span class="line">        [](<span class="keyword">const</span> <span class="keyword">uint32_t</span> statusCode, <span class="keyword">const</span> mcpw::Header&amp; header)</span><br><span class="line">        &#123;</span><br><span class="line">        &#125;&#125;,</span><br><span class="line">    mcpw::DataStream&#123;</span><br><span class="line">        [](<span class="built_in">std</span>::<span class="built_in">string</span>&amp; data)</span><br><span class="line">        &#123;</span><br><span class="line">        &#125;&#125;,</span><br><span class="line">    mcpw::Result&#123;</span><br><span class="line">        [](<span class="keyword">int32_t</span> retCode)</span><br><span class="line">        &#123;</span><br><span class="line">        &#125;&#125;</span><br><span class="line">);</span><br><span class="line">    </span><br><span class="line">request-&gt;Get();</span><br></pre></td></tr></table></figure>
+<p>4、回调进度</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">auto</span> request = <span class="built_in">std</span>::make_shared&lt;mcpw::Request&gt;(</span><br><span class="line">    mcpw::Url&#123;url&#125;,</span><br><span class="line">    mcpw::RspHeader&#123;</span><br><span class="line">        [](<span class="keyword">const</span> <span class="keyword">uint32_t</span> statusCode, <span class="keyword">const</span> mcpw::Header&amp; header)</span><br><span class="line">        &#123;</span><br><span class="line">        &#125;&#125;,</span><br><span class="line">    mcpw::DataStream&#123;</span><br><span class="line">        [](<span class="built_in">std</span>::<span class="built_in">string</span>&amp; data)</span><br><span class="line">        &#123;</span><br><span class="line">        &#125;&#125;,</span><br><span class="line">    mcpw::Progress&#123;</span><br><span class="line">        [](<span class="keyword">uint64_t</span> upnow, <span class="keyword">uint64_t</span> uptotal, <span class="keyword">uint64_t</span> downnow, <span class="keyword">uint64_t</span> downtotal)</span><br><span class="line">        &#123;</span><br><span class="line">        &#125;&#125;,</span><br><span class="line">    mcpw::Result&#123;</span><br><span class="line">        [](<span class="keyword">int32_t</span> retCode)</span><br><span class="line">        &#123;</span><br><span class="line">        &#125;&#125;</span><br><span class="line">);</span><br><span class="line">    </span><br><span class="line">request-&gt;Get();</span><br></pre></td></tr></table></figure>
+<p>5、设置代理</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">auto</span> request = <span class="built_in">std</span>::make_shared&lt;mcpw::Request&gt;(</span><br><span class="line">    mcpw::Url&#123;url&#125;,</span><br><span class="line">    mcpw::Proxy&#123;</span><br><span class="line">           <span class="string">"proxy.host"</span>,</span><br><span class="line">           <span class="string">"proxy.port"</span>,</span><br><span class="line">           <span class="string">"proxy.name"</span>,</span><br><span class="line">           <span class="string">"proxy.password"</span></span><br><span class="line">         &#125;,</span><br><span class="line">    mcpw::RspHeader&#123;</span><br><span class="line">        [](<span class="keyword">const</span> <span class="keyword">uint32_t</span> statusCode, <span class="keyword">const</span> mcpw::Header&amp; header)</span><br><span class="line">        &#123;</span><br><span class="line">        &#125;&#125;,</span><br><span class="line">    mcpw::DataStream&#123;</span><br><span class="line">        [](<span class="built_in">std</span>::<span class="built_in">string</span>&amp; data)</span><br><span class="line">        &#123;</span><br><span class="line">        &#125;&#125;,</span><br><span class="line">    mcpw::Progress&#123;</span><br><span class="line">        [](<span class="keyword">uint64_t</span> upnow, <span class="keyword">uint64_t</span> uptotal, <span class="keyword">uint64_t</span> downnow, <span class="keyword">uint64_t</span> downtotal)</span><br><span class="line">        &#123;</span><br><span class="line">        &#125;&#125;,</span><br><span class="line">    mcpw::Result&#123;</span><br><span class="line">        [](<span class="keyword">int32_t</span> retCode)</span><br><span class="line">        &#123;</span><br><span class="line">        &#125;&#125;</span><br><span class="line">);</span><br><span class="line">    </span><br><span class="line">request-&gt;Get();</span><br></pre></td></tr></table></figure>
+<p>6、设置cafile路径</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">auto</span> request = <span class="built_in">std</span>::make_shared&lt;mcpw::Request&gt;(</span><br><span class="line">    mcpw::Cacert&#123;<span class="string">"cafile/local/path"</span>&#125;,</span><br><span class="line">    mcpw::Url&#123;url&#125;,</span><br><span class="line">    mcpw::RspHeader&#123;</span><br><span class="line">        [](<span class="keyword">const</span> <span class="keyword">uint32_t</span> statusCode, <span class="keyword">const</span> mcpw::Header&amp; header)</span><br><span class="line">        &#123;</span><br><span class="line">        &#125;&#125;,</span><br><span class="line">    mcpw::DataStream&#123;</span><br><span class="line">        [](<span class="built_in">std</span>::<span class="built_in">string</span>&amp; data)</span><br><span class="line">        &#123;</span><br><span class="line">        &#125;&#125;,</span><br><span class="line">    mcpw::Result&#123;</span><br><span class="line">        [](<span class="keyword">int32_t</span> retCode)</span><br><span class="line">        &#123;</span><br><span class="line">        &#125;&#125;</span><br><span class="line">);</span><br><span class="line">    </span><br><span class="line">request-&gt;Get();</span><br></pre></td></tr></table></figure>
+<p>7、指定会话</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">auto</span> session = <span class="built_in">std</span>::make_shared&lt;mcpw::Session&gt;(mcpw::ConnNumber&#123;<span class="number">3</span>&#125;);</span><br><span class="line"><span class="keyword">auto</span> request = <span class="built_in">std</span>::make_shared&lt;mcpw::Request&gt;(</span><br><span class="line">    session,</span><br><span class="line">    mcpw::Url&#123;url&#125;,</span><br><span class="line">    mcpw::RspHeader&#123;</span><br><span class="line">        [](<span class="keyword">const</span> <span class="keyword">uint32_t</span> statusCode, <span class="keyword">const</span> mcpw::Header&amp; header)</span><br><span class="line">        &#123;</span><br><span class="line">        &#125;&#125;,</span><br><span class="line">    mcpw::DataStream&#123;</span><br><span class="line">        [](<span class="built_in">std</span>::<span class="built_in">string</span>&amp; data)</span><br><span class="line">        &#123;</span><br><span class="line">        &#125;&#125;,</span><br><span class="line">    mcpw::Result&#123;</span><br><span class="line">        [](<span class="keyword">int32_t</span> retCode)</span><br><span class="line">        &#123;</span><br><span class="line">        &#125;&#125;</span><br><span class="line">);</span><br><span class="line">    </span><br><span class="line">request-&gt;Get();</span><br></pre></td></tr></table></figure>
+<p>8、取消请求</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">auto</span> request = <span class="built_in">std</span>::make_shared&lt;mcpw::Request&gt;(</span><br><span class="line">    mcpw::Url&#123;url&#125;,</span><br><span class="line">    mcpw::RspHeader&#123;</span><br><span class="line">        [](<span class="keyword">const</span> <span class="keyword">uint32_t</span> statusCode, <span class="keyword">const</span> mcpw::Header&amp; header)</span><br><span class="line">        &#123;</span><br><span class="line">        &#125;&#125;,</span><br><span class="line">    mcpw::DataStream&#123;</span><br><span class="line">        [](<span class="built_in">std</span>::<span class="built_in">string</span>&amp; data)</span><br><span class="line">        &#123;</span><br><span class="line">        &#125;&#125;,</span><br><span class="line">    mcpw::Result&#123;</span><br><span class="line">        [](<span class="keyword">int32_t</span> retCode)</span><br><span class="line">        &#123;</span><br><span class="line">        &#125;&#125;</span><br><span class="line">);</span><br><span class="line">    </span><br><span class="line">request-&gt;Get();</span><br><span class="line">.... </span><br><span class="line">request-&gt;Stop();</span><br></pre></td></tr></table></figure>
+<p>9、设置请求参数</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">auto</span> request = <span class="built_in">std</span>::make_shared&lt;mcpw::Request&gt;(</span><br><span class="line">    mcpw::Url&#123;url&#125;,</span><br><span class="line">    mcpw::Parameters&#123;</span><br><span class="line">    	     &#123;<span class="string">"para1"</span>, <span class="string">"value1"</span>&#125;,</span><br><span class="line">    	     &#123;<span class="string">"para2"</span>, <span class="string">"value2"</span>&#125;,</span><br><span class="line">    	  &#125;,</span><br><span class="line">    mcpw::RspHeader&#123;</span><br><span class="line">        [](<span class="keyword">const</span> <span class="keyword">uint32_t</span> statusCode, <span class="keyword">const</span> mcpw::Header&amp; header)</span><br><span class="line">        &#123;</span><br><span class="line">        &#125;&#125;,</span><br><span class="line">    mcpw::DataStream&#123;</span><br><span class="line">        [](<span class="built_in">std</span>::<span class="built_in">string</span>&amp; data)</span><br><span class="line">        &#123;</span><br><span class="line">        &#125;&#125;,</span><br><span class="line">    mcpw::Result&#123;</span><br><span class="line">        [](<span class="keyword">int32_t</span> retCode)</span><br><span class="line">        &#123;</span><br><span class="line">        &#125;&#125;</span><br><span class="line">);</span><br><span class="line">    </span><br><span class="line">request-&gt;Get();</span><br></pre></td></tr></table></figure>
+<h3 id="二、post"><a href="#二、post" class="headerlink" title="二、post"></a>二、post</h3><p>1、post</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">auto</span> request = <span class="built_in">std</span>::make_shared&lt;mcpw::Request&gt;(</span><br><span class="line">    mcpw::Url&#123;url&#125;,</span><br><span class="line">    mcpw::Body&#123;</span><br><span class="line">             <span class="string">"post data add here!"</span></span><br><span class="line">         &#125;,</span><br><span class="line">    mcpw::RspHeader&#123;</span><br><span class="line">        [](<span class="keyword">const</span> <span class="keyword">uint32_t</span> statusCode, <span class="keyword">const</span> mcpw::Header&amp; header)</span><br><span class="line">        &#123;</span><br><span class="line">        &#125;&#125;,</span><br><span class="line">    mcpw::DataStream&#123;</span><br><span class="line">        [](<span class="built_in">std</span>::<span class="built_in">string</span>&amp; data)</span><br><span class="line">        &#123;</span><br><span class="line">        &#125;&#125;,</span><br><span class="line">    mcpw::Result&#123;</span><br><span class="line">        [](<span class="keyword">int32_t</span> retCode)</span><br><span class="line">        &#123;</span><br><span class="line">        &#125;&#125;</span><br><span class="line">);</span><br><span class="line">    </span><br><span class="line">request-&gt;Post();</span><br></pre></td></tr></table></figure>
+<p>2、multipart post </p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">auto</span> request = <span class="built_in">std</span>::make_shared&lt;mcpw::Request&gt;(</span><br><span class="line">    mcpw::Url&#123;url&#125;,</span><br><span class="line">    mcpw::MultiPartBody&#123;</span><br><span class="line">              make_pair(<span class="string">"part1 name"</span>, <span class="string">"part1 data"</span>),</span><br><span class="line">              make_pair(<span class="string">"part2 name"</span>, <span class="string">"pata2 data"</span>)&#125;, </span><br><span class="line">         &#125;,</span><br><span class="line">    mcpw::RspHeader&#123;</span><br><span class="line">        [](<span class="keyword">const</span> <span class="keyword">uint32_t</span> statusCode, <span class="keyword">const</span> mcpw::Header&amp; header)</span><br><span class="line">        &#123;</span><br><span class="line">        &#125;&#125;,</span><br><span class="line">    mcpw::DataStream&#123;</span><br><span class="line">        [](<span class="built_in">std</span>::<span class="built_in">string</span>&amp; data)</span><br><span class="line">        &#123;</span><br><span class="line">        &#125;&#125;,</span><br><span class="line">    mcpw::Result&#123;</span><br><span class="line">        [](<span class="keyword">int32_t</span> retCode)</span><br><span class="line">        &#123;</span><br><span class="line">        &#125;&#125;</span><br><span class="line">);</span><br><span class="line">    </span><br><span class="line">request-&gt;MultiPartPost();</span><br></pre></td></tr></table></figure>
 
-        <div class="article-info info-on-right">
-          
-          
+      
 
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>送人玫瑰，手有余香<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/assets/img/weixin.jpg">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/01/16/TesseractIniOS/" class="archive-article-date">
-  	<time datetime="2018-01-16T08:55:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-16</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2018/01/16/TesseractIniOS/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">在iOS中使用Tesseract</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
+        
+        
+    </div>
+</aside>
+
+
+
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/01/16/TesseractIniOS/">在iOS中使用Tesseract</a>
-    </h1>
+  
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">ocr tesseract iOS</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
   
 
-    
+  
+
+  
 
 
           </div>
@@ -246,8 +297,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
